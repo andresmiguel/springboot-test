@@ -7,6 +7,8 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.home.course.Course;
+
 @Service
 public class TopicService {
 	
@@ -33,6 +35,14 @@ public class TopicService {
 	
 	public void delete(String id) {
 		topicRepository.delete(id);
+	}
+	
+	public void addCourseToTopic(String topicId, Course course) {
+		Topic topic = topicRepository.findOne(topicId);
+		course.setTopic(topic);
+		topic.addCourse(course);
+		
+		topicRepository.save(topic);
 	}
 	
 }

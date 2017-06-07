@@ -1,7 +1,14 @@
 package com.home.topic;
 
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.home.course.Course;
 
 @Entity
 public class Topic {
@@ -10,7 +17,10 @@ public class Topic {
 	private String id;
 	private String name;
 	private String description;
-	
+
+	@OneToMany(cascade = CascadeType.ALL)
+	private Set<Course> courses;
+
 	public Topic(String id, String name, String description) {
 		super();
 		this.id = id;
@@ -45,5 +55,13 @@ public class Topic {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
+
+	public void addCourse(Course course) {
+		this.courses.add(course);
+	}
+
+	@JsonIgnore
+	public Set<Course> getAllCourses() {
+		return this.courses;
+	}
 }
